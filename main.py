@@ -15,8 +15,11 @@ class Parser:
     def __init__(self):
         self.s = Service(os.getenv('DRIVER_PATH'))
         self.chrome_options = Options()
+        self.chrome_options.binary_location = os.getenv('BINARY_LOCATION')
         self.chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(service=self.s, options=self.chrome_options)
+        self.chrome_options.add_argument('--disable-dev-shm-usage')
+        self.chrome_options.add_argument('--no-sandbox')
+        self.driver = webdriver.Chrome(executable_path=os.getenv('DRIVER_PATH'), service=self.s, options=self.chrome_options)
         self.company_names = []
         self.dates = []
         self.links = []
